@@ -9,9 +9,10 @@
 
     <div class="clock">
       <div class="clock-face">
-        <div class="hand hour-hand"></div>
-        <div class="hand min-hand"></div>
+        <img class="clock-face-img" src="clock face.png" alt="">
         <div class="hand second-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand hour-hand"></div>
       </div>
     </div>
 
@@ -48,6 +49,14 @@
         inset 0 0 10px black,
         0 0 10px rgba(0,0,0,0.2);
     }
+    .clock-face-img {
+      position: relative;
+      right: 6%;
+      bottom: 4%;
+      width: 112%;
+      height: 112%;
+      transform: translateY(-3px);
+    }
 
     .clock-face {
       position: relative;
@@ -63,9 +72,23 @@
       position: absolute;
       top: 50%;
       transform-origin: 100%;
-      transform: rotate(90deg);
       transition: all 0.05s;
+      transform: rotate(90deg);
       transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+    .hour-hand {
+      width: 20%;
+      left: 30%;      
+      transition: none;
+    }
+    .min-hand {
+      width: 35%;
+      right: 50%;
+      height: 4px;      
+      transition: none;
+    }
+    .second-hand {
+      height: 2px;
     }
 
   </style>
@@ -83,6 +106,17 @@
 
       const seconds = now.getSeconds();
       const secondsDegrees = ((seconds / 60) * 360) + 90;
+
+
+      //fixing error
+      if(seconds == 0) {
+        secondHand.style.transition = 'none';
+      } else {
+        secondHand.style.transition = 'all 0.05s';
+        secondHand.style.transitionTimingFunction = 'cubic-bezier(0.1, 2.7, 0.58, 1)';
+      }
+
+      
       secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
       const mins = now.getMinutes();
